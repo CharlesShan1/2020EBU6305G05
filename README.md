@@ -2,9 +2,9 @@
 ## Group Number:2020EBU6305G05
 ## Project Title:XXXXXXXXX
 ## Members:
-Hongtian Shan, 2018212606, jp190013138, charles.shht@gmail.com
-Youguang Zhou,
-Deen Ma,
-Zhaoyang Ma,
-Bochen Yang,
-Yucheng Xiao,
+Hongtian Shan, 2018212606, 190013138, charles.shht@gmail.com  
+Youguang Zhou, 2018212619, 190015198, 1157581101@qq.com  
+Deen Ma, 2018212607  
+Zhaoyang Ma, 2018212617  
+Bochen Yang, 2018212743, 190012496, yangbochen135@163.com  
+Yucheng Xiao, 
