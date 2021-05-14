@@ -1,0 +1,321 @@
+<!DOCTYPE html> 
+<html>
+<head> 
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<title>Map</title> 
+<style type="text/css"> 
+html{height:100%} 
+body{height:100%;margin:0px;padding:0px} 
+#container{
+	position: relative;
+	z-index:1;
+	height:100%} 
+
+
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    font-family: "Roboto", sans-serif;
+}
+
+
+.sidebar{
+    position: fixed;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background: #042331;
+    transition: all .5s ease;
+}
+
+.sidebar header{
+    font-size: 22px;
+    color: white;
+    text-align: center;
+    line-height: 70px;
+    background: #063146;
+    user-select: none;
+}
+
+.sidebar ul a{
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: 65px;
+    font-size: 20px;
+    color: white;
+    padding-left: 40px;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(255,255,255,.1);
+    border-bottom: 1px solid black;
+    translation: .4s;
+}
+
+ul li:hover a{
+    padding-left: 50px;
+}
+
+.sidebar ul a i{
+    margin-right: 16px;
+}
+
+
+#check{
+	/*position: fixed;
+	z-index:9999;*/
+    display: none;
+}
+
+label #btn,label #cancel{
+	position: fixed;z-index:9999;
+    /*position: absolute;*/
+    cursor: pointer;
+    background: #042331;
+    border-radius: 3px;
+}
+
+label #btn{
+    left: 40px;
+    top: 25px;
+    font-size: 35px;
+    color: white;
+    padding: 6px 12px;
+    transition: all .5s;
+}
+
+label #cancel{
+    z-index: 1111;
+    left: -195px;
+    top: 17px;
+    font-size:30px;
+    color: #0a5275;
+    padding: 4px 9px;
+    transition: all .5s ease;
+}
+
+#check:checked ~ .sidebar{
+    left: 0;
+}
+
+#check:checked ~ label #btn{
+    left: 250px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#check:checked ~ label #cancel{
+    left: 195px;
+}
+
+#check:checked ~ section{
+    margin-left: 250px;
+}
+
+section{
+    /*background: url(bg.png) no-repeat;
+    background-position: center;
+    background-size: cover;*/
+    height: 100vh;
+    transition: all .5s;
+}
+</style> 
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=1.0&type=webgl&ak=RO33G15peQ69RgQddM1BhVWNBjt1lkGV">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.css">
+</head> 
+  
+<body> 
+<input type="checkbox" id="check">
+    <label for="check">
+        <i class="fas fa-bars" id="btn"></i>
+        <i class="fas fa-times" id="cancel"></i>
+    </label>
+    <div class="sidebar">
+        <header>Navigation Menu</header>
+        <ul>
+            <li><a href="#"><i class="fas fa-qrcode"></i>Main page</a></li>
+            <li><a href="#"><i class="fas fa-link"></i>Notebook</a></li>
+            <li><a href="#"><i class="fas fa-stream"></i>Schedule</a></li>
+            <li><a href="#"><i class="fas fa-calendar-week"></i>Achievement</a></li>
+            <li><a href="#"><i class="far fa-question-circle"></i>Extend reading</a></li>
+            <li><a href="#"><i class="fas fa-sliders-h"></i>Setting</a></li>
+            <li><a href="#"><i class="far fa-envelope"></i>About</a></li>
+        </ul>
+    </div>
+    <section>
+<div id="container"></div>
+<div class="selectLevel" id="level">
+    <div>select level</div>
+    <input id="range" type="range" min="1" max="5" step="1" value="1" oninput="getValue(event); alter()"/>
+    <div id="value1">1</div>
+</div>
+</section>
+</body>
+
+<script type="text/javascript">
+var map = new BMapGL.Map("container");
+// 创建地图实例 
+var point1 = new BMapGL.Point(116.404, 39.915);
+// 创建点坐标 
+var scaleCtrl = new BMapGL.ScaleControl();  // 添加比例尺控件
+map.addControl(scaleCtrl);
+var zoomCtrl = new BMapGL.ZoomControl();  // 添加缩放控件
+map.addControl(zoomCtrl);
+map.centerAndZoom(point1, 15);
+// 初始化地图，设置中心点坐标和地图级别 
+
+var marker1 = new BMapGL.Marker(point1);
+    map.addOverlay(marker1);
+
+    var opts = {
+    width: 200,
+    height: 100,
+    title: '故宫博物院'
+};
+var infoWindow = new BMapGL.InfoWindow('故宫博物院', opts);
+// 点标记添加点击事件
+marker1.addEventListener('click', function () {
+    map.openInfoWindow(infoWindow, point1); // 开启信息窗口
+});
+
+function change(){    
+    // 设置默认停靠位置和偏移量  
+    this.defaultAnchor = BMAP_ANCHOR_BOTTOM_LEFT;    
+    this.defaultOffset = new BMapGL.Size(700, 20);    
+}    
+// 通过JavaScript的prototype属性继承于BMap.Control   
+change.prototype = new BMapGL.Control();
+
+change.prototype.initialize = function(map){    
+    var div = document.getElementById("level");
+    // console.log(range.getValue());
+    // 添加DOM元素到地图中   
+    map.getContainer().appendChild(div);    
+    // 将DOM元素返回  
+    return div;    
+ }
+ // 创建控件实例    
+var Change = new change();    
+// 添加到地图当中    
+map.addControl(Change);
+
+var range2=1;
+function getValue(event){
+            range2 = parseInt(event.target.value);
+            document.getElementById("value1").innerHTML=range2;
+            // console.log(range2);
+        }
+
+function level1(){
+    var marker1 = new BMapGL.Marker(point1);
+    map.addOverlay(marker1);
+
+    var opts = {
+    width: 200,
+    height: 100,
+    title: '故宫博物院'
+};
+var infoWindow = new BMapGL.InfoWindow('故宫博物院', opts);
+// 点标记添加点击事件
+marker1.addEventListener('click', function () {
+    map.openInfoWindow(infoWindow, point1); // 开启信息窗口
+});
+}
+
+var point2 = new BMapGL.Point(116.418, 39.914);
+function level2(){
+    var marker2 = new BMapGL.Marker(point2);
+    map.addOverlay(marker2);
+    var opts = {
+    width: 200,
+    height: 100,
+    title: '王府井'
+};
+var infoWindow = new BMapGL.InfoWindow('王府井', opts);
+// 点标记添加点击事件
+marker2.addEventListener('click', function () {
+    map.openInfoWindow(infoWindow, point2); // 开启信息窗口
+});
+}
+
+var point3 = new BMapGL.Point(116.384,39.9167)
+function level3(){
+    var marker3 = new BMapGL.Marker(point3);
+    map.addOverlay(marker3);
+    var opts = {
+    width: 200,
+    height: 100,
+    title: '西单'
+};
+var infoWindow = new BMapGL.InfoWindow('西单', opts);
+// 点标记添加点击事件
+marker3.addEventListener('click', function () {
+    map.openInfoWindow(infoWindow, point3); // 开启信息窗口
+});
+}
+
+var point4 = new BMapGL.Point(116.41748256068176,39.88809239690257)
+function level4(){
+    var marker4 = new BMapGL.Marker(point4);
+    map.addOverlay(marker4);
+    var opts = {
+    width: 200,
+    height: 100,
+    title: '天坛公园'
+};
+var infoWindow = new BMapGL.InfoWindow('天坛公园', opts);
+// 点标记添加点击事件
+marker4.addEventListener('click', function () {
+    map.openInfoWindow(infoWindow, point4); // 开启信息窗口
+});
+}
+
+var point5 = new BMapGL.Point(116.39573908480654,39.93238122382097)
+function level5(){
+    var marker5 = new BMapGL.Marker(point5);
+    map.addOverlay(marker5);
+    var opts = {
+    width: 200,
+    height: 100,
+    title: '北海公园'
+};
+var infoWindow = new BMapGL.InfoWindow('北海公园', opts);
+// 点标记添加点击事件
+marker5.addEventListener('click', function () {
+    map.openInfoWindow(infoWindow, point5); // 开启信息窗口
+});
+}
+
+
+function alter(){
+    level1();
+    switch(range2){
+        case 1:
+            map.clearOverlays();
+            level1();
+            break;
+        case 2:
+            map.clearOverlays();
+            level2();
+            break;
+        case 3:
+            map.clearOverlays();
+            level3();
+            break;
+        case 4:
+            map.clearOverlays();
+            level4();
+            break;
+        case 5:
+            map.clearOverlays();
+            level5();
+            break;
+    }
+}
+
+</script> 
+</html>
