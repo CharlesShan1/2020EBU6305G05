@@ -1,5 +1,6 @@
 # 2021EBU6305G05
 ## Group Number:2020EBU6305G05
+![avatar](/resources/Maped.jpg) 
 ## Project Title: Human Geography of Beijing
 ## Members:
 Hongtian Shan, 2018212606, 190013138, charles.shht@gmail.com  
