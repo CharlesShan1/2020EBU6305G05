@@ -1,0 +1,111 @@
+.postcard_body{
+	margin: 0;
+	padding: 0;
+	min-height: 65vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.mycontainer{
+	position: relative;
+	width: 1200px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+
+.mycontainer .box{
+	position: relative;
+	width:280px;
+	height:400px;
+	margin: 20px 0;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.mycontainer .box .imgBx{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	clip-path: circle(400px at center 100px);
+	transition: 0.5s;
+	transition-delay: 0s;
+}
+
+.mycontainer .box:hover .imgBx{
+	clip-path: circle(80px at center 100px);
+	/*transition-delay: 0.5s;*/
+}
+
+.mycontainer .box:hover .imgBx{
+	position: absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.mycontainer .box .content{
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 55%;
+	padding: 20px;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+.mycontainer .box .content h2{
+	color: black;
+	font-bold: 600;
+	font-size: 20px;
+	margin: 0;
+	padding: 5px;
+}
+
+.mycontainer .box .content p{
+	color: black;
+	font-size: 16px;
+	font-bold: 400;
+	padding: 12px;
+}
+
+.mycontainer .box .content a{
+	text-decoration: none;
+	background-color: #000;
+	color: #fff;
+	padding: 5px;
+	display: inline-block;
+}
+
+.mycontainer .box .content h2,
+.mycontainer .box .content p,
+.mycontainer .box .content a{
+	opacity: 0;
+	transition: 0.5s;
+	transform: translate(20px);
+}
+
+.mycontainer .box:hover .content h2{
+	opacity: 1;
+	transform: translate(0px);
+	transition-delay: 0.5s;
+}
+
+.mycontainer .box:hover .content p{
+	opacity: 1;
+	transform: translate(0px);
+	transition-delay: 0.7s;
+}
+
+.mycontainer .box:hover .content a{
+	opacity: 1;
+	transform: translate(0px);
+	transition-delay: 0.9s;
+}

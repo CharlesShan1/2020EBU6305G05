@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>quiz module</title>
+
+<link rel="stylesheet" type="text/css" href="style.css" />
+
+<style type="text/css">
+.demo{width:760px; margin:60px auto 10px auto}
+</style>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="quiz.js"></script>
+<script type="text/javascript">
+// 答题内容      question题目标题        answers 1-4选项         correctAnswer  正确答案选项
+    var init = { 
+        'questions': [{ 'question': 'What is the ” Wengshan” called after changing the name?', 'answers': ['Tai','Wanshou','Xiqiao','Huoshen'], 'correctAnswer': 2 },
+                     { 'question': 'Which island is NOT included in Yiheyuan?', 'answers': ['Nanhu', 'Tuancheng', 'Tiantang', 'Zaojiantang'], 'correctAnswer': 3 }, 
+                     { 'question': 'Which year did the Eight-Nation Alliance invading the Summer Palace?', 'answers': ['1899', '1900', '1901', '1902'], 'correctAnswer': 2 },
+                     { 'question': 'Which of the following is NOT the name of the courtyard in the summer palace?', 'answers': ['Wanshou', 'Leshou', 'Yulan', 'Yiyuns'], 'correctAnswer': 1 }] };
+    $(function(){
+        $('#quiz-container').jquizzy({
+            questions: init.questions
+        });
+    });
+    </script>
+</head>
+
+<body onload="openLeft_dh()">
+<!--
+<div id="header">
+    <div class="dn_btn" onclick="openLeft_dh()">open</div>
+</div>-->
+<div class="demo">
+	    <div id='quiz-container'></div>
+</div>
+<div>
+	<button type="button" ><a href="../../Detail/nanluoguxiang/index.html">back</a></button>
+</div>
+
+
+</body>
+</html>

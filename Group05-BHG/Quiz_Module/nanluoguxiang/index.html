@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>quiz module</title>
+
+<link rel="stylesheet" type="text/css" href="style.css" />
+
+<style type="text/css">
+.demo{width:760px; margin:60px auto 10px auto}
+</style>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="quiz.js"></script>
+<script type="text/javascript">
+// 答题内容      question题目标题        answers 1-4选项         correctAnswer  正确答案选项
+    var init = { 
+        'questions': [{ 'question': 'Nanluoguxiang,is one of the oldest XXX in Beijing', 'answers': ['alleyways', 'palace', 'temple', 'none of above'], 'correctAnswer': 1 },
+                     { 'question': 'Which metro near the Nanluoguxiang?', 'answers': ['5&6', '4&8', '6&8', '7&8'], 'correctAnswer': 3 }, 
+                     { 'question': 'How old is Nanluoguxiang?', 'answers': ['500', '600', '700', '800'], 'correctAnswer': 4 },
+                     { 'question': 'How many \'hutong\'it has?', 'answers': ['8+8', '4+4', '16+16', '12+12'], 'correctAnswer': 1 }] };
+    $(function(){
+        $('#quiz-container').jquizzy({
+            questions: init.questions
+        });
+    });
+    </script>
+</head>
+
+<body onload="openLeft_dh()" style="background-color: #d4d3da;">
+<!--
+<div id="header">
+    <div class="dn_btn" onclick="openLeft_dh()">open</div>
+</div>-->
+<div class="demo">
+	    <div id='quiz-container'></div>
+</div>
+<div>
+	<button type="button"><a href="../../Detail/nanluoguxiang/index.html">back</a></button>
+</div>
+
+
+</body>
+</html>

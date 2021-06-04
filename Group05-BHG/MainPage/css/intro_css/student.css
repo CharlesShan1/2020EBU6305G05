@@ -1,0 +1,254 @@
+/* 学员 */
+.artice-box{
+  width: 100%;
+  position: relative;
+  margin-bottom: 96px;
+}
+.artice-box:last-child{
+  margin-bottom: 0;
+}
+.artice-box img{
+  width: 100%;
+  position: relative;
+}
+.artice-box .text-box{
+  position: absolute;
+  padding: 64px 88px 88px 64px;
+  width: 514px;
+  background: #FBFBFB;
+  box-sizing: border-box;
+  top: 94px;
+  z-index: 5;
+}
+.artice-box .left-box{
+  left: -24px;
+}
+.artice-box .right-box{
+  right: -24px;
+  width: 664px;
+  padding: 64px 64px 88px 88px;
+}
+
+.en-us .artice-box .right-box{ top:118px; width: 668px;}
+
+.artice-box .text-box h3{
+  font-size: 30px;
+  color: #2A2E2E;
+  letter-spacing: 0;
+  font-family: 'TencentSansw7';
+  line-height: 45px;
+  font-weight: 400;
+}
+.artice-box .text-box h3 img{
+  width: 216px;
+}
+.artice-box .text-box h4{
+  font-size: 20px;
+  color: #2A2E2E;
+  letter-spacing: 0;
+  line-height: 30px;
+  margin-top: 16px;
+  margin-bottom: 4px;
+  font-weight: 400;
+}
+.artice-box .text-box .desc{
+  font-size: 14px;
+  color: #5F6464;
+  letter-spacing: 0;
+  line-height: 25px;
+  width: 362px;
+}
+.artice-box .right-box .desc{
+  width: 100%;
+}
+
+.student .type-box{
+  margin-top: 44px;
+}
+.type-box .row{
+	width: 100%;
+}
+.type-box .row-1 .item-1{
+	width: 66.66666666%;
+	background: url(../../resources/interests.jpg) no-repeat center;
+	background-size: cover;
+	height: 271px;
+	float: left;
+	padding: 40px;
+}
+.type-box .row-1 .item-2{
+	width: 33.33333333%;
+	background: url(../../resources/museum.jpg) no-repeat center;
+	background-size: cover;
+	height: 271px;
+	float: left;
+	padding: 40px;
+}
+.type-box .row-2 .item-3{
+	width: 33.33333333%;
+	background: url(../../resources/nature.png) no-repeat center;
+	background-size: cover;
+	height: 271px;
+	float: left;
+	padding: 40px;
+}
+.type-box .row .item{
+	box-sizing: border-box;
+	float: left;
+	padding: 40px;
+	height: 271px;
+	position: relative;
+	overflow: hidden;
+}
+.type-box .row .item .title{
+	font-size: 30px;
+  color: #FFFFFF;
+  letter-spacing: 0;
+  margin-bottom: 25px;
+  position: relative;
+  font-family: 'TencentSansw7';
+}
+.type-box .row .item .mask-bg{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	box-sizing: border-box;
+	top: 0;
+    left: 0;
+    transform: translate(0, 271px);
+    transform-origin: bottom;
+    transition: all .5s cubic-bezier(0.2, 0.0, 0.2, 1);
+    -webkit-transition: all .5s cubic-bezier(0.2, 0.0, 0.2, 1);
+    -moz-transition: all .5s cubic-bezier(0.2, 0.0, 0.2, 1);
+    -ms-transition: all .5s cubic-bezier(0.2, 0.0, 0.2, 1);
+    -o-transition: all .5s cubic-bezier(0.2, 0.0, 0.2, 1);
+}
+.type-box .row-1 .item-1 .mask-bg{
+	background: rgba(0,82,217,1)
+}
+.type-box .row-1 .item-2 .mask-bg{
+	background: #9B26B6
+}
+.type-box .row-2 .item-1 .mask-bg{
+	background: rgba(255,103,31,1)
+}
+.type-box .row-2 .item-2 .mask-bg{
+	background: rgba(121,192,0,1)
+}
+.type-box .row-2 .item-3 .mask-bg{
+	background: #00A9CE
+}
+.type-box .row-2 .item-4 .mask-bg{
+	background: rgba(255,103,31,1)
+}
+.type-box .row-2 .item-5 .mask-bg{
+	background: #00A9CE
+}
+.type-box .row-3 .item-6 .mask-bg{
+	background: rgba(150,140,131,1)
+}
+.type-box .row-3 .item-7 .mask-bg{
+	background: rgba(121,192,0,1)
+}
+
+
+.type-box .row .item .label{
+	font-size: 16px;
+	color: #FFFFFF;
+	letter-spacing: 0;
+	line-height: 26px;
+	margin-top: 25px;
+	margin-right: 40px;
+	position: relative;
+	opacity: 0;
+	transform: translate(0, 80px);
+    transform-origin: bottom;
+    -webkit-transform-origin: bottom;
+    -moz-transform-origin: bottom;
+    -ms-transform-origin: bottom;
+    -o-transform-origin: bottom;
+    transition: transform .5s cubic-bezier(0.2, 0.0, 0.2, 1), opacity .3s cubic-bezier(0.2, 0.0, 0.2, 1);
+    -webkit-transition: transform .5s cubic-bezier(0.2, 0.0, 0.2, 1), opacity .3s cubic-bezier(0.2, 0.0, 0.2, 1);
+    -moz-transition: transform .5s cubic-bezier(0.2, 0.0, 0.2, 1), opacity .3s cubic-bezier(0.2, 0.0, 0.2, 1);
+    -ms-transition: transform .5s cubic-bezier(0.2, 0.0, 0.2, 1), opacity .3s cubic-bezier(0.2, 0.0, 0.2, 1);
+    -o-transition: transform .5s cubic-bezier(0.2, 0.0, 0.2, 1), opacity .3s cubic-bezier(0.2, 0.0, 0.2, 1);
+}
+.type-box .row .item:hover .mask-bg{
+	transform: translate(0, 0px);
+	-webkit-transform: translate(0, 0px);
+	-moz-transform: translate(0, 0px);
+	-ms-transform: translate(0, 0px);
+	-o-transform: translate(0, 0px);
+}
+.type-box .row .item:hover .label{
+	opacity: 1;
+    transform: translate(0, 0px);
+	-webkit-transform: translate(0, 0px);
+	-moz-transform: translate(0, 0px);
+	-ms-transform: translate(0, 0px);
+	-o-transform: translate(0, 0px);
+}
+.type-box .row-2 .item-4{
+	width: 33.33333333%;
+	background: url(../../resources/military.jpg) no-repeat center;
+	background-size: cover;
+}
+.type-box .row-2 .item-5{
+	width: 33.3333333%;
+	background: url(../../resources/architecture.jpg) no-repeat center;
+	background-size: cover;
+}
+.type-box .row-3 .item-6{
+	width: 33.33333333%;
+	background: url(../../resources/ancient.jpg) no-repeat center;
+	background-size: cover;
+}
+.type-box .row-3 .item-7{
+	width: 66.66666666%;
+	background: url(../../resources/education.jpg) no-repeat center;
+	background-size: cover;
+}
+
+.student .link-box{
+  margin-top: 0;
+}
+
+.pc-bg{
+	display: block;
+}
+.mobile-bg{
+	display: none;
+}
+
+.student .brand-item .label-box{ min-width:240px; margin-right: 20px;}
+.student .brand-item .desc-box .desc{ margin-top:17px;}
+.student .mod-section-ad h2{ width: 550px; margin-top: 120px;}
+
+
+@media all and (max-width:1440px){
+	.en-us .type-box .row .item .title{ font-size:24px;}
+	.en-us .type-box .row .item .label{ line-height: 24px;}
+}
+
+
+@media all and (max-width:1024px){
+	.student .mod-section-ad h2{ margin-top:70px;}
+	.en-us .type-box .row .item .label{ display:none;}
+	.en-us .type-box .row .item:hover .mask-bg{ display:none;}
+}
+
+
+
+@media all and (max-width:768px){
+	.student .mod-section-ad h2{ width:450px;}
+}
+
+@media all and (max-width:425px){
+	.student .mod-section-ad .desc br{ display: none;}
+	.artice-box .text-box h4{ font-size:16px; line-height: 1.5;}
+}
+
+
+

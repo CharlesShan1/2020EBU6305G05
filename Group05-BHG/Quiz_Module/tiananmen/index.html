@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>quiz module</title>
+
+<link rel="stylesheet" type="text/css" href="style.css" />
+
+<style type="text/css">
+.demo{width:760px; margin:60px auto 10px auto}
+</style>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="quiz.js"></script>
+<script type="text/javascript">
+// 答题内容      question题目标题        answers 1-4选项         correctAnswer  正确答案选项
+    var init = { 
+        'questions': [{ 'question': 'How height the Tiananmen is after 1970?', 'answers': ['33.87m', '34.70m', '33.98m', '34.88m'], 'correctAnswer': 2 },
+                     { 'question': 'When was the stone lion carved in front of Tiananmen Gate?', 'answers': ['1417', '1418', '1419', '1420'], 'correctAnswer': 1 }, 
+                     { 'question': 'How many Jinshui bridges are there in front of Tiananmen Gate?', 'answers': ['3', '4', '5', '6'], 'correctAnswer': 3 },
+                     { 'question': 'Which dynasty was Tiananmen first built?', 'answers': ['Tang', 'Yuan', 'Ming', 'Qing'], 'correctAnswer': 2 }] };
+    $(function(){
+        $('#quiz-container').jquizzy({
+            questions: init.questions
+        });
+    });
+    </script>
+</head>
+
+<body onload="openLeft_dh()">
+<!--
+<div id="header">
+    <div class="dn_btn" onclick="openLeft_dh()">open</div>
+</div>-->
+<div class="demo">
+	    <div id='quiz-container'></div>
+</div>
+<div>
+	<button type="button" ><a href="../../Detail/nanluoguxiang/index.html">back</a></button>
+</div>
+
+
+</body>
+</html>

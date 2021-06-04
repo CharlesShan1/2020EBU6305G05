@@ -1,0 +1,838 @@
+<!DOCTYPE html> 
+<html>
+<head> 
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<title>Map</title> 
+<script src="./nicEdit.js" type="text/javascript"></script>
+<!-- <link rel="import" href="index.html">
+<link rel="stylesheet" type="text/css" href="style.css" /> -->
+
+<style type="text/css"> 
+
+html{height:100%} 
+body{height:100%;margin:0px;padding:0px} 
+#container{
+	position: relative;
+	z-index:1;
+	height:100%;
+} 
+
+
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    font-family: "Roboto", sans-serif;
+}
+
+
+.sidebar{
+    position: fixed;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background: #042331;
+    transition: all .5s ease;
+}
+
+.sidebar header{
+    font-size: 22px;
+    color: white;
+    text-align: center;
+    line-height: 70px;
+    background: #063146;
+    user-select: none;
+}
+
+.sidebar ul a{
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: 65px;
+    font-size: 20px;
+    color: white;
+    padding-left: 40px;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(255,255,255,.1);
+    border-bottom: 1px solid black;
+    /* translation: .4s; */
+}
+
+label #cancelnotebook{
+    top:17px;
+    font-size:30px;
+}
+#notebook{
+    width:300px;
+    height:600px;
+    top:30px;
+    right:30px;
+    position:absolute;
+    z-index:9999;
+    border:1px solid blue;
+    background-color: #FFFFFF;
+}
+ul li:hover a{
+    padding-left: 50px;
+}
+
+.sidebar ul a i{
+    margin-right: 16px;
+}
+
+
+#check{
+	/*position: fixed;
+	z-index:9999;*/
+    display: none;
+}
+
+label #btn,label #cancel{
+	position: fixed;z-index:9999;
+    /*position: absolute;*/
+    cursor: pointer;
+    background: #042331;
+    border-radius: 3px;
+}
+
+label #btn{
+    left: 40px;
+    top: 25px;
+    font-size: 35px;
+    color: white;
+    padding: 6px 12px;
+    transition: all .5s;
+}
+
+label #cancel{
+    z-index: 1111;
+    left: -195px;
+    top: 17px;
+    font-size:30px;
+    color: #0a5275;
+    padding: 4px 9px;
+    transition: all .5s ease;
+}
+
+#check:checked ~ .sidebar{
+    left: 0;
+}
+
+#check:checked ~ label #btn{
+    left: 250px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#check:checked ~ label #cancel{
+    left: 195px;
+}
+
+#check:checked ~ section{
+    margin-left: 250px;
+}
+
+section{
+    /*background: url(bg.png) no-repeat;
+    background-position: center;
+    background-size: cover;*/
+    height: 100vh;
+    transition: all .5s;
+}
+#value1{margin-left: 50%;}
+#button{margin-left:32%;margin-top:18px;margin-bottom: 18px;}
+
+
+#button:hover { background:#2a6d8b; }
+#button
+{
+    
+ 
+    text-decoration:none;
+	background:#119bd1;
+	color:#f2f2f2;
+	
+	padding: 2px 13px 2px 13px;
+	font-size:16px;
+	font-family: 微软雅黑,宋体,Arial,Helvetica,Verdana,sans-serif;
+	font-weight:bold;
+	border-radius:3px;
+	
+	-webkit-transition:all linear 0.30s;
+	-moz-transition:all linear 0.30s;
+	transition:all linear 0.30s;
+	
+	}
+#demo{
+    top:-30px;
+    right:100px;
+}
+</style> 
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=1.0&type=webgl&ak=RO33G15peQ69RgQddM1BhVWNBjt1lkGV">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.css">
+</head> 
+  
+<body> 
+<input type="checkbox" id="check">
+    <label for="check">
+        <i class="fas fa-bars" id="btn"></i>
+        <i class="fas fa-times" id="cancel"></i>
+    </label>
+    <div class="sidebar">
+        <header>Navigation Menu</header>
+        <ul>
+            <li><a href="#" onclick="mainPage();"><i class="fas fa-qrcode" ></i>Main page</a></li>
+            <li><a href="#" onclick="changeTime()"><i class="fas fa-stream"></i>Change Time</a></li>
+            <li><a href="#" onclick="notebookshow()"><i class="fas fa-link"></i>Notebook</a></li>
+            <li><a href="index1.html" ><i class="fas fa-stream"></i>Classification</a></li>
+            <!--
+			<li><a href="#"><i class="fas fa-calendar-week"></i>Achievement</a></li>
+            <li><a href="#"><i class="far fa-question-circle"></i>Extend reading</a></li>
+            <li><a href="#"><i class="fas fa-sliders-h"></i>Setting</a></li>
+			-->
+            <li><a href="../MainPage/index.html"><i class="far fa-envelope"></i>About</a></li>
+            
+        </ul>
+    </div>
+    <section>
+        
+        <script src="./nicEdit.js" type="text/javascript"></script>
+	<script>
+		function notebookshow(){
+			var ele = document.getElementById("notebook");
+			if(ele.style.display == "none"){
+				ele.style.display  = "";
+			}else
+				ele.style.display  = "none";
+		}
+		bkLib.onDomLoaded(function() { toggleArea1(); });
+	</script>
+	
+	<div id="notebook" style="display:none">
+		<i class="fas fa-times" id="cancelnotebook"></i>
+		<div id="myArea1" style="width: 300px; height: 100px; border: 1px solid #000;">
+			<!-- This is some TEST CONTENT<br />
+			In a DIV Tag<br />
+			Click the Buttons to activate -->
+		</div>
+	</div>
+    <div id="container"></div>
+    </section>
+    <!-- <iframe src="Demo03.html" height="300" width="500" id="demo" scrolling="auto" frameborder="0"></iframe> -->
+
+</body>
+<!-- <script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="quiz.js"></script> -->
+
+<script type="text/javascript">
+
+var map = new BMapGL.Map("container");
+// 创建地图实例 
+var point0 = new BMapGL.Point(116.4021854633808,39.94005676538363);
+// 创建点坐标 
+var scaleCtrl = new BMapGL.ScaleControl();  // 添加比例尺控件
+map.addControl(scaleCtrl);
+var zoomCtrl = new BMapGL.ZoomControl();  // 添加缩放控件
+map.addControl(zoomCtrl);
+map.centerAndZoom(point0, 13);
+// map.enableScrollWheelZoom();
+map.setDisplayOptions({
+                poiText: false
+            })
+// 初始化地图，设置中心点坐标和地图级别 
+
+function change(){    
+    // 设置默认停靠位置和偏移量  
+    this.defaultAnchor = BMAP_ANCHOR_BOTTOM_LEFT;    
+    this.defaultOffset = new BMapGL.Size(700, 20);    
+}    
+
+
+var value1;
+var level;
+var Change;
+function changeTime(){
+    map.removeControl(Change);
+    map.clearOverlays();
+    map.addOverlay(marker1);
+    map.addOverlay(marker4);
+    var range = document.createElement("input");
+    range.type = "range";
+    range.min = "1";
+    range.max = "4";
+    range.step="1";
+    range.value="1";
+    range.oninput = function(){
+        range2 = parseInt(event.target.value);
+        if(range2==1){
+            range2="Ming Dynasty";
+        }else if(range2==2){
+            range2="Qing Dynasty";
+        }else if(range2==3){
+            range2="The founding of new China";
+        }else if(range2==4){
+            range2="At Present";
+        }
+        value1.innerHTML=range2;
+        alter();
+    };
+    value1 = document.createElement("div");
+    level = document.createElement("div");
+    // value1.style.cssText = "margin-left:30%";
+    value1.innerHTML=range2; 
+    level.appendChild(range);
+    level.appendChild(value1);
+    // 通过JavaScript的prototype属性继承于BMap.Control   
+    change.prototype = new BMapGL.Control();
+    change.prototype.initialize = function(map){    
+        // console.log(range.getValue());
+        // 添加DOM元素到地图中   
+        map.getContainer().appendChild(level);    
+        // 将DOM元素返回  
+        return level;    
+    }
+    // 创建控件实例    
+    Change = new change();    
+    // 添加到地图当中    
+    map.addControl(Change);
+}
+
+
+function mainPage(){ 
+    map.removeControl(Change);
+    level1();
+    level2();
+    level3();
+    level4();
+    level5();
+    level6();
+    level7();
+    level8();
+}
+
+function mainPage1(){ 
+    level1();
+    level2();
+    level3();
+    level4();
+    level5();
+    level6();
+    level7();
+    level8();
+}
+
+var range2="Ming Dynasty";
+
+var marker1;
+var marker2;
+var marker3;
+var marker4;
+var marker5;
+var marker6;
+var marker7;
+var marker8;
+var marker9;
+var marker10;
+
+
+var point1 = new BMapGL.Point(116.40410509690209,39.91612231158614);
+function level1(){
+    var icon1 = new BMapGL.Icon("marker_image1/red.png", new BMapGL.Size(20, 30))
+    marker1 = new BMapGL.Marker(point1,{icon:icon1});
+    map.addOverlay(marker1);
+    var opts = {
+    width: 330,
+    height: 350,
+    };
+
+    var sContent = `<h4 style='margin:0 0 5px 0;'>Tian'anmen</h4>
+    <img style='float:right;margin:0 4px 22px' id='imgDemo1' src='images2/tiananmen.jpg' width='139' height='104'/>
+    <p style='margin:0;line-height:1.5;font-size:13px;text-indent:0'>
+        Tian'anmen (the Gate of Heavenly Peace), is located in the center of Beijing. 
+        It was first built in 1417 and named Chengtianmen (the Gate of Heavenly Succession).
+         At the end of the Ming Dynasty, it was seriously damaged by war. 
+         When it was rebuilt under the Qing in 1651, it was renamed Tian'anmen, 
+         and served as the main entrance to the Imperial City, 
+         the administrative and residential quarters for court officials and retainers.
+    </p>
+    <button id="button" onclick=window.location.href="../Detail/tiananmen/index.html">learn more</button>`
+
+    var infoWindow = new BMapGL.InfoWindow(sContent,opts);
+    // 点标记添加点击事件
+    marker1.addEventListener('click', function () {
+        this.openInfoWindow(infoWindow);
+        document.getElementById('imgDemo1').onload = function () {
+        infoWindow.redraw(); // 防止在网速较慢时生成的信息框高度比图片总高度小，导致图片部分被隐藏
+    };
+    });
+}
+
+var point2 = new BMapGL.Point(116.40033776129542,39.91176617031693);
+function level2(){
+    var icon1 = new BMapGL.Icon("marker_image1/red.png", new BMapGL.Size(20, 30))
+    marker2 = new BMapGL.Marker(point2,{icon:icon1});
+    map.addOverlay(marker2);
+    var opts = {
+    width: 330,
+    height: 290,
+    };
+    var sContent = `<h4 style='margin:0 0 5px 0;'>The Great Hall of the People</h4>
+    <img style='float:right;margin:0 4px 22px' id='imgDemo6' src='images2/renmindahuitang.jpg' width='139' height='104'/>
+    <p style='margin:0;line-height:1.5;font-size:13px;text-indent:0'>
+        The Great Hall of the people is the meeting place of the National People's Congress and the office of the Standing Committee of the National People's Congress. 
+        It is also an important place for the party, the state and people's organizations to hold political activities,
+        It is also a place for Chinese party and state leaders and the people to hold political, diplomatic and cultural activities.
+        The annual National People's Congress, the Chinese people's Political Consultative Conference and 
+        the Five-year National Congress of the Communist Party of China are also held here.
+    </p>
+    <button id="button" onclick=window.location.href="../Detail/renmindahuitang/index.html">learn more</button>
+    
+`
+    var infoWindow = new BMapGL.InfoWindow(sContent,opts);
+    // 点标记添加点击事件
+    marker2.addEventListener('click', function () {
+        this.openInfoWindow(infoWindow);
+        document.getElementById('imgDemo6').onload = function () {
+        infoWindow.redraw(); // 防止在网速较慢时生成的信息框高度比图片总高度小，导致图片部分被隐藏
+        
+    };
+    });
+}
+
+function level2_1(){
+    var icon1 = new BMapGL.Icon("marker_image1/blue.png", new BMapGL.Size(30, 30))
+    marker2 = new BMapGL.Marker(point2,{icon:icon1});
+    map.addOverlay(marker2);
+    var opts = {
+    width: 330,
+    height: 290,
+    };
+    var sContent = `<h4 style='margin:0 0 5px 0;'>The Great Hall of the People</h4>
+    <img style='float:right;margin:0 4px 22px' id='imgDemo6' src='images2/renmindahuitang.jpg' width='139' height='104'/>
+    <p style='margin:0;line-height:1.5;font-size:13px;text-indent:0'>
+        The Great Hall of the people is the meeting place of the National People's Congress and the office of the Standing Committee of the National People's Congress. 
+        It is also an important place for the party, the state and people's organizations to hold political activities,
+        It is also a place for Chinese party and state leaders and the people to hold political, diplomatic and cultural activities.
+        The annual National People's Congress, the Chinese people's Political Consultative Conference and 
+        the Five-year National Congress of the Communist Party of China are also held here.
+    </p>
+    <button id="button" onclick=window.location.href="../Detail/renmindahuitang/index.html">learn more</button>`
+    var infoWindow = new BMapGL.InfoWindow(sContent,opts);
+    // 点标记添加点击事件
+    marker2.addEventListener('click', function () {
+        this.openInfoWindow(infoWindow);
+        document.getElementById('imgDemo6').onload = function () {
+        infoWindow.redraw(); // 防止在网速较慢时生成的信息框高度比图片总高度小，导致图片部分被隐藏
+    };
+    });
+}
+var point3 = new BMapGL.Point(116.27904911877569,40.005056005543175)
+function level3(){
+    var icon1 = new BMapGL.Icon("marker_image1/red.png", new BMapGL.Size(20, 30));
+    marker3 = new BMapGL.Marker(point3,{icon:icon1});
+    map.addOverlay(marker3);
+    var opts = {
+    width: 350,
+    height: 350,
+    };
+    var sContent = `<h4 style='margin:0 0 5px 0;'>The Summer Palace</h4>
+    <img style='float:right;margin:0 4px 22px' id='imgDemo3' src='images2/yiheyuan.jpg' width='139' height='104'/>
+    <p style='margin:0;line-height:1.5;font-size:13px;text-indent:0'>
+        The Summer Palace, the imperial garden of the Qing Dynasty in China, formerly known as the Qingyi Garden, 
+        is located in the western suburbs of Beijing, 15 kilometers away from the urban area, 
+        covering an area of about 290 hectares, adjacent to the Yuanmingyuan.
+        It is a large landscape garden based on Kunming Lake and Longevity Hill,
+         based on the West Lake of Hangzhou and drawing on the design techniques of gardens 
+         in the south of the Yangtze River. It is also the most complete imperial palace and 
+         imperial court preserved. It is known as the "Royal Garden Museum" and is also a 
+         national key tourist attraction.
+    </p>
+    <button id="button" onclick=window.location.href="../Detail/yiheyuan/index.html">learn more</button>`
+    var infoWindow = new BMapGL.InfoWindow(sContent,opts);
+    // 点标记添加点击事件
+    marker3.addEventListener('click', function () {
+        this.openInfoWindow(infoWindow);
+        document.getElementById('imgDemo3').onload = function () {
+        infoWindow.redraw(); // 防止在网速较慢时生成的信息框高度比图片总高度小，导致图片部分被隐藏
+    };
+    });
+}
+
+function level3_1(){
+    var icon1 = new BMapGL.Icon("marker_image1/black.png", new BMapGL.Size(30, 30));
+    marker3 = new BMapGL.Marker(point3,{icon:icon1});
+    map.addOverlay(marker3);
+    var opts = {
+    width: 350,
+    height: 350,
+    };
+    var sContent = `<h4 style='margin:0 0 5px 0;'>The Summer Palace</h4>
+    <img style='float:right;margin:0 4px 22px' id='imgDemo3' src='images2/yiheyuan.jpg' width='139' height='104'/>
+    <p style='margin:0;line-height:1.5;font-size:13px;text-indent:0'>
+        The Summer Palace, the imperial garden of the Qing Dynasty in China, formerly known as the Qingyi Garden, 
+        is located in the western suburbs of Beijing, 15 kilometers away from the urban area, 
+        covering an area of about 290 hectares, adjacent to the Yuanmingyuan.
+        It is a large landscape garden based on Kunming Lake and Longevity Hill,
+         based on the West Lake of Hangzhou and drawing on the design techniques of gardens 
+         in the south of the Yangtze River. It is also the most complete imperial palace and 
+         imperial court preserved. It is known as the "Royal Garden Museum" and is also a 
+         national key tourist attraction.
+    </p>
+    <button id="button" onclick=window.location.href="../Detail/yiheyuan/index.html">learn more</button>`
+    var infoWindow = new BMapGL.InfoWindow(sContent,opts);
+    // 点标记添加点击事件
+    marker3.addEventListener('click', function () {
+        this.openInfoWindow(infoWindow);
+        document.getElementById('imgDemo3').onload = function () {
+        infoWindow.redraw(); // 防止在网速较慢时生成的信息框高度比图片总高度小，导致图片部分被隐藏
+    };
+    });
+}
+
+var point4 = new BMapGL.Point(116.4173598688903,39.88947518874298)
+function level4(){
+    var icon1 = new BMapGL.Icon("marker_image1/red.png", new BMapGL.Size(20, 30))
+    marker4 = new BMapGL.Marker(point4,{icon:icon1});
+    map.addOverlay(marker4);
+    var opts = {
+    width: 320,
+    height: 300,
+    };
+
+    var sContent = `<h4 style='margin:0 0 5px 0;'>The Temple of Heaven</h4>
+    <img style='float:right;margin:0 4px 22px' id='imgDemo2' src='images2/tiantan.jpg' width='139' height='104'/>
+    <p style='margin:0;line-height:1.5;font-size:13px;text-indent:0'>
+        The Temple of Heaven is located in southern Beijing. It is included in the UNESCO world heritage list in 1998.
+         With an area of 2.7 million square meters, it is the largest of its kind in the country. 
+         Built in 1420, the 18th year of the reign of Ming Emperor Yongle, the temple was where emperors 
+         went to worship heaven for good harvests.
+    </p>
+    <button id="button" onclick=window.location.href="../Detail/tiantan/index.html">learn more</button>`
+
+    
+    var infoWindow = new BMapGL.InfoWindow(sContent,opts);
+    // 点标记添加点击事件
+    marker4.addEventListener('click', function () {
+        this.openInfoWindow(infoWindow);
+        document.getElementById('imgDemo2').onload = function () {
+        infoWindow.redraw(); // 防止在网速较慢时生成的信息框高度比图片总高度小，导致图片部分被隐藏
+    };
+    });
+}
+
+var point5 = new BMapGL.Point(116.30990206588633,40.01465930239501)
+function level5(){
+    var icon1 = new BMapGL.Icon("marker_image1/red.png", new BMapGL.Size(20, 30))
+    marker5 = new BMapGL.Marker(point5,{icon:icon1});
+    map.addOverlay(marker5);
+    var opts = {
+    width: 350,
+    height: 350,
+    };
+
+    var sContent = `<h4 style='margin:0 0 5px 0;'>Old Summer Palace</h4>
+    <img style='float:right;margin:0 4px 22px' id='imgDemo4' src='images2/yuanmingyuan.jpg' width='139' height='104'/>
+    <p style='margin:0;line-height:1.5;font-size:13px;text-indent:0'>
+        Yuanmingyuan is a large Royal Garden in Qing Dynasty. It is located in Haidian District of Beijing. 
+        It was built in 1707 (the 46th year of Kangxi reign of Qing Dynasty). It is composed of Yuanmingyuan, 
+        its subsidiary garden Changchun Garden and Qichun Garden (later renamed wanchunyuan). It is also called 
+        yuanmingsan garden and is known as "the garden of Wanyuan". The emperor of Qing Dynasty came here every 
+        midsummer to spend the summer and listen to the government, so Yuanmingyuan is also called "Summer Palace".
+        During the second Opium War in 1860, Yuanmingyuan was looted and burned by the British and French forces. 
+        The former site is now Yuanmingyuan Ruins Park.
+    </p>
+    <button id="button" onclick=window.location.href="../Detail/yuanmingyuan/index.html">learn more</button>`
+
+    
+    var infoWindow = new BMapGL.InfoWindow(sContent,opts);
+    // 点标记添加点击事件
+    marker5.addEventListener('click', function () {
+        this.openInfoWindow(infoWindow);
+        document.getElementById('imgDemo4').onload = function () {
+        infoWindow.redraw(); // 防止在网速较慢时生成的信息框高度比图片总高度小，导致图片部分被隐藏
+    };
+    });
+}
+
+function level5_1(){
+    var icon1 = new BMapGL.Icon("marker_image1/black.png", new BMapGL.Size(30, 30))
+    marker5 = new BMapGL.Marker(point5,{icon:icon1});
+    map.addOverlay(marker5);
+    var opts = {
+    width: 350,
+    height: 350,
+    };
+
+    var sContent = `<h4 style='margin:0 0 5px 0;'>Old Summer Palace</h4>
+    <img style='float:right;margin:0 4px 22px' id='imgDemo4' src='images2/yuanmingyuan.jpg' width='139' height='104'/>
+    <p style='margin:0;line-height:1.5;font-size:13px;text-indent:0'>
+        Yuanmingyuan is a large Royal Garden in Qing Dynasty. It is located in Haidian District of Beijing. 
+        It was built in 1707 (the 46th year of Kangxi reign of Qing Dynasty). It is composed of Yuanmingyuan, 
+        its subsidiary garden Changchun Garden and Qichun Garden (later renamed wanchunyuan). It is also called 
+        yuanmingsan garden and is known as "the garden of Wanyuan". The emperor of Qing Dynasty came here every 
+        midsummer to spend the summer and listen to the government, so Yuanmingyuan is also called "Summer Palace".
+        During the second Opium War in 1860, Yuanmingyuan was looted and burned by the British and French forces. 
+        The former site is now Yuanmingyuan Ruins Park.
+    </p>
+    <button id="button" onclick=window.location.href="../Detail/yuanmingyuan/index.html">learn more</button>`
+
+    
+    var infoWindow = new BMapGL.InfoWindow(sContent,opts);
+    // 点标记添加点击事件
+    marker5.addEventListener('click', function () {
+        this.openInfoWindow(infoWindow);
+        document.getElementById('imgDemo4').onload = function () {
+        infoWindow.redraw(); // 防止在网速较慢时生成的信息框高度比图片总高度小，导致图片部分被隐藏
+    };
+    });
+}
+
+var point6 = new BMapGL.Point(116.33020870045979,39.91547476079274)
+function level6(){
+    var icon1 = new BMapGL.Icon("marker_image1/red.png", new BMapGL.Size(20, 30))
+    marker6 = new BMapGL.Marker(point6,{icon:icon1});
+    map.addOverlay(marker6);
+    var opts = {
+    width: 350,
+    height: 350,
+    };
+
+    var sContent = `<h4 style='margin:0 0 5px 0;'>Military Museum of Chinese People's Revolution</h4>
+    <img style='float:right;margin:0 4px 22px' id='imgDemo4' src='images2/junbo.jpg' width='139' height='104'/>
+    <p style='margin:0;line-height:1.5;font-size:13px;text-indent:0'>
+        The Chinese people's Revolutionary Military Museum is the only large-scale comprehensive military
+         history museum in China, covering an area of more than 80000 square meters, with a construction 
+         area of more than 60000 square meters and a display area of more than 40000 square meters.
+The main building is 94.7 meters high, with 7 floors in the center and 4 floors on both sides. By the end
+ of 2012, the museum had 22 exhibition halls and 2 exhibition squares. The Military Museum collects 
+ more than 340000 cultural relics and collections.Among them, there are 1793 national first-class cultural relics,
+  more than 250 large-scale weapons and equipment, more than 1600 artworks, and 2551 gifts in foreign military exchanges.
+Among them are bronze gilded crossbow, Zhenyuan ship anchor, Ye Ting command knife, 
+38 rifle and the first tank of the people's Liberation Army.
+    </p>
+    <button id="button" onclick=window.location.href="../Detail/junbo/index.html">learn more</button>`
+
+    
+    var infoWindow = new BMapGL.InfoWindow(sContent,opts);
+    // 点标记添加点击事件
+    marker6.addEventListener('click', function () {
+        this.openInfoWindow(infoWindow);
+        document.getElementById('imgDemo4').onload = function () {
+        infoWindow.redraw(); // 防止在网速较慢时生成的信息框高度比图片总高度小，导致图片部分被隐藏
+    };
+    });
+}
+
+function level6_1(){
+    var icon1 = new BMapGL.Icon("marker_image1/blue.png", new BMapGL.Size(30, 30))
+    marker6 = new BMapGL.Marker(point6,{icon:icon1});
+    map.addOverlay(marker6);
+    var opts = {
+    width: 350,
+    height: 350,
+    };
+
+    var sContent = `<h4 style='margin:0 0 5px 0;'>Military Museum of Chinese People's Revolution</h4>
+    <img style='float:right;margin:0 4px 22px' id='imgDemo4' src='images2/junbo.jpg' width='139' height='104'/>
+    <p style='margin:0;line-height:1.5;font-size:13px;text-indent:0'>
+        The Chinese people's Revolutionary Military Museum is the only large-scale comprehensive military
+         history museum in China, covering an area of more than 80000 square meters, with a construction 
+         area of more than 60000 square meters and a display area of more than 40000 square meters.
+The main building is 94.7 meters high, with 7 floors in the center and 4 floors on both sides. By the end
+ of 2012, the museum had 22 exhibition halls and 2 exhibition squares. The Military Museum collects 
+ more than 340000 cultural relics and collections.Among them, there are 1793 national first-class cultural relics,
+  more than 250 large-scale weapons and equipment, more than 1600 artworks, and 2551 gifts in foreign military exchanges.
+Among them are bronze gilded crossbow, Zhenyuan ship anchor, Ye Ting command knife, 
+38 rifle and the first tank of the people's Liberation Army.
+    </p>
+    <button id="button" onclick=window.location.href="../Detail/junbo/index.html">learn more</button>`
+
+    
+    var infoWindow = new BMapGL.InfoWindow(sContent,opts);
+    // 点标记添加点击事件
+    marker6.addEventListener('click', function () {
+        this.openInfoWindow(infoWindow);
+        document.getElementById('imgDemo4').onload = function () {
+        infoWindow.redraw(); // 防止在网速较慢时生成的信息框高度比图片总高度小，导致图片部分被隐藏
+    };
+    });
+}
+
+var point7 = new BMapGL.Point(116.40243532235975,40.00014352331753)
+function level7(){
+    var icon1 = new BMapGL.Icon("marker_image1/red.png", new BMapGL.Size(20, 30))
+    marker7 = new BMapGL.Marker(point7,{icon:icon1});
+    map.addOverlay(marker7);
+    var opts = {
+    width: 330,
+    height: 330,
+    };
+
+    var sContent = `<h4 style='margin:0 0 5px 0;'>Bird-Nest</h4>
+    <img style='float:right;margin:0 4px 22px' id='imgDemo4' src='images2/niaochao.jpg' width='139' height='104'/>
+    <p style='margin:0;line-height:1.5;font-size:13px;text-indent:0'>
+        The National Stadium (Bird's Nest) is located in the south of the central area of Beijing Olympic Park.
+         It is the main stadium for the 2008 Beijing Olympic Games. It covers an area of 20.4 hectares, 
+         with a construction area of 258000 square meters and can accommodate 91000 spectators.
+         The opening and closing ceremonies of the Olympic and Paralympic Games, track and field competitions 
+         and football finals were held. After the Olympic Games, it has become a large-scale professional
+          place for Beijing citizens to participate in sports activities and enjoy sports entertainment, 
+          as well as a landmark sports building and Olympic heritage.
+    </p>
+    <button id="button" onclick=window.location.href="../Detail/niaochao/index.html">learn more</button>`
+
+    
+    var infoWindow = new BMapGL.InfoWindow(sContent,opts);
+    // 点标记添加点击事件
+    marker7.addEventListener('click', function () {
+        this.openInfoWindow(infoWindow);
+        document.getElementById('imgDemo4').onload = function () {
+        infoWindow.redraw(); // 防止在网速较慢时生成的信息框高度比图片总高度小，导致图片部分被隐藏
+    };
+    });
+}
+
+function level7_1(){
+    var icon1 = new BMapGL.Icon("marker_image1/dark_blue.png", new BMapGL.Size(30, 30))
+    marker7 = new BMapGL.Marker(point7,{icon:icon1});
+    map.addOverlay(marker7);
+    var opts = {
+    width: 330,
+    height: 330,
+    };
+
+    var sContent = `<h4 style='margin:0 0 5px 0;'>Bird-Nest</h4>
+    <img style='float:right;margin:0 4px 22px' id='imgDemo4' src='images2/niaochao.jpg' width='139' height='104'/>
+    <p style='margin:0;line-height:1.5;font-size:13px;text-indent:0'>
+        The National Stadium (Bird's Nest) is located in the south of the central area of Beijing Olympic Park.
+         It is the main stadium for the 2008 Beijing Olympic Games. It covers an area of 20.4 hectares, 
+         with a construction area of 258000 square meters and can accommodate 91000 spectators.
+         The opening and closing ceremonies of the Olympic and Paralympic Games, track and field competitions 
+         and football finals were held. After the Olympic Games, it has become a large-scale professional
+          place for Beijing citizens to participate in sports activities and enjoy sports entertainment, 
+          as well as a landmark sports building and Olympic heritage.
+    </p>
+    <button id="button" onclick=window.location.href="../Detail/niaochao/index.html">learn more</button>`
+
+    
+    var infoWindow = new BMapGL.InfoWindow(sContent,opts);
+    // 点标记添加点击事件
+    marker7.addEventListener('click', function () {
+        this.openInfoWindow(infoWindow);
+        document.getElementById('imgDemo4').onload = function () {
+        infoWindow.redraw(); // 防止在网速较慢时生成的信息框高度比图片总高度小，导致图片部分被隐藏
+    };
+    });
+}
+
+var point8 = new BMapGL.Point(116.47127436427415,39.921529428280664)
+function level8(){
+    var icon1 = new BMapGL.Icon("marker_image1/red.png", new BMapGL.Size(20, 30))
+    marker8 = new BMapGL.Marker(point8,{icon:icon1});
+    map.addOverlay(marker8);
+    var opts = {
+    width: 300,
+    height: 300,
+    };
+
+    var sContent = `<h4 style='margin:0 0 5px 0;'>CCTV Headquarters</h4>
+    <img style='float:right;margin:0 4px 22px' id='imgDemo4' src='images2/yangshi.jpg' width='139' height='104'/>
+    <p style='margin:0;line-height:1.5;font-size:13px;text-indent:0'>
+        CCTV Headquarters, located at 32 East 3rd Ring Road, Chaoyang District, Beijing, 
+        is located in Beijing business center area (CBD),Next to Beijing international trade building. 
+        The park is composed of three buildings: CCTV Headquarters Building (main building) located 
+        in the southwest of the parkTV Cultural Center (North Building) in the northwest and energy 
+        service center in the Northeast
+    </p>
+    <button id="button" onclick=window.location.href="../Detail/yangshi/index.html">learn more</button>`
+
+    
+    var infoWindow = new BMapGL.InfoWindow(sContent,opts);
+    // 点标记添加点击事件
+    marker8.addEventListener('click', function () {
+        this.openInfoWindow(infoWindow);
+        document.getElementById('imgDemo4').onload = function () {
+        infoWindow.redraw(); // 防止在网速较慢时生成的信息框高度比图片总高度小，导致图片部分被隐藏
+    };
+    });
+}
+
+function level8_1(){
+    var icon1 = new BMapGL.Icon("marker_image1/dark_blue.png", new BMapGL.Size(30, 30))
+    marker8 = new BMapGL.Marker(point8,{icon:icon1});
+    map.addOverlay(marker8);
+    var opts = {
+    width: 300,
+    height: 300,
+    };
+
+    var sContent = `<h4 style='margin:0 0 5px 0;'>CCTV Headquarters</h4>
+    <img style='float:right;margin:0 4px 22px' id='imgDemo4' src='images2/yangshi.jpg' width='139' height='104'/>
+    <p style='margin:0;line-height:1.5;font-size:13px;text-indent:0'>
+        CCTV Headquarters, located at 32 East 3rd Ring Road, Chaoyang District, Beijing, 
+        is located in Beijing business center area (CBD),Next to Beijing international trade building. 
+        The park is composed of three buildings: CCTV Headquarters Building (main building) located 
+        in the southwest of the parkTV Cultural Center (North Building) in the northwest and energy 
+        service center in the Northeast
+    </p>
+    <button id="button" onclick=window.location.href="../Detail/yangshi/index.html">learn more</button>`
+
+    
+    var infoWindow = new BMapGL.InfoWindow(sContent,opts);
+    // 点标记添加点击事件
+    marker8.addEventListener('click', function () {
+        this.openInfoWindow(infoWindow);
+        document.getElementById('imgDemo4').onload = function () {
+        infoWindow.redraw(); // 防止在网速较慢时生成的信息框高度比图片总高度小，导致图片部分被隐藏
+    };
+    });
+}
+
+function alter(){
+    level1();
+    switch(range2){
+        case "Ming Dynasty":
+            map.clearOverlays();
+            level1();
+            level4();
+            break;
+        case "Qing Dynasty":
+            map.clearOverlays();
+            level1();
+            level4();
+            level3_1();
+            level5_1();
+            break;
+        case "The founding of new China":
+            map.clearOverlays();
+            level1();
+            level4();
+            level3_1();
+            level5_1();
+            level2_1();
+            level6_1();
+            break;
+        case "At Present":
+            map.clearOverlays();
+            level1();
+            level4();
+            level3_1();
+            level5_1();
+            level2_1();
+            level6_1();
+            level7_1();
+            level8_1();
+            break;
+    }
+}
+
+mainPage1();
+
+
+// document.write(open.import.body.innerHTML);
+</script> 
+</html>

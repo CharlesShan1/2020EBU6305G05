@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      body,
+      html,
+      #map {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        margin: 0;
+        font-family: "微软雅黑";
+      }
+      .wrapper {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        padding: 10px 15px;
+        background: #fff;
+        z-index: 100;
+      }
+      .button {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script
+      type="text/javascript"
+      src="http://api.map.baidu.com/api?type=webgl&v=1.0&ak=gTnc11rFwnLY0w9jzs6NkWgYMzIbBNG3"
+    ></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src= "./js/jquery-3.2.1.min.js">
+    </script>
+    <!--><script src="./md5.js">
+    </script>
+    <script type="text/javascript">
+        function GetBaidu(query,obj){
+        var q=query;
+        var appid = "20210325000742102";
+        var key = "vc6Ake_wFThZ0Eah0WPS";
+        var salt = (new Date).getTime();
+        var str1 = appid + q + salt +key;
+        var sign = MD5(str1);
+        $.ajax({url:'http://api.fanyi.baidu.com/api/trans/vip/translate',
+        type:'post',dataType:'jsonp',
+        data:{q:q,from:'auto',to:'en',appid:appid,salt:salt,sign:sign
+        },
+        success:function(msg){
+        var html = "";
+        for(var i=0;i<msg.tans_result.length;i++){
+            console.log(msg.trans_result[i].dst);
+            html+=msg.
+            trans_result[i].dst
+        }
+        obj.html(html)}}); 
+    }
+        var text = $('.main p').html(function(i,text){
+        //console.log(i+text);
+        GetBaidu(text,$(this));
+        });
+    
+        var text = $('.main div').html(
+        function(i,text){
+        //console.log(i+text);
+        GetBaidu(text,$(this));
+        });
+        var text = $('.main h2').html(function(i,text){ 
+            GetBaidu(text,$(this));
+        });
+       
+        var text = $('.main span').
+        html(function(i,text){
+        
+        GetBaidu(text,$(this));
+        });
+    </script>-->
+    
+  </head>
+  <body>
+    <div id="app" class="wrapper">
+      <el-button size="small" @click.stop="handleClick('公园')">Parts</el-button>
+      <el-button size="small" @click.stop="handleClick('名胜古迹')">Interests</el-button>
+      <el-button size="small" @click.stop="handleClick('博物馆')">Museums</el-button>
+      <el-button size="small" @click.stop="handleClick('步行街')">Pedestrian Street</el-button>
+    </div>
+    <div id="map"></div>
+  </body>
+</html>
+<script type="text/javascript">
+  
+  function googleTranslateElementInit() {
+  
+  new google.translate.TranslateElement(
+    {
+      includedLanguages: 'en',
+            //选择语言的样式，这个是面板，还有下拉框的样式，具体的记不到了，找不到api~~
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            //自动显示翻译横幅，就是翻译后顶部出现的那个，有点丑，这个属性没有用的话，请看文章底部的其他方法
+      autoDisplay: true, 
+      //还有些其他参数，由于原插件不再维护，找不到详细api了，将就了，实在不行直接上dom操作
+    }, 
+    'google_translate_element'//触发按钮的id
+  );
+  }
+
+  new Vue({
+    el: "#app",
+    data: {
+      allPoints: [],
+    },
+    mounted() {
+      this.initMap();
+    },
+    methods: {
+      initMap() {
+        this.map = new BMapGL.Map("map");
+        this.map.enableScrollWheelZoom(true);
+        const point1 = new BMapGL.Point(116.404, 39.915);
+        const scaleCtrl = new BMapGL.ScaleControl();
+        const zoomCtrl = new BMapGL.ZoomControl();
+        this.map.addControl(scaleCtrl);
+        this.map.addControl(zoomCtrl);
+        this.map.centerAndZoom(point1, 15);
+      },
+      handleClick(item) {
+        this.map.clearOverlays();
+        var mPoint = new BMapGL.Point(116.404, 39.915);
+        const local = new BMapGL.LocalSearch(this.map, {
+          renderOptions: { map: this.map, autoViewport: false },
+        });
+        local.searchNearby(item, mPoint, 10000);
+      },
+    }
+  });
+</script>

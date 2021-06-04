@@ -1,0 +1,35 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.video1 {
+    width: 100%;
+    height: 100vh;
+	object-fit: cover;
+	z-index: 1;
+}
+.videobox { 
+	position:relative; 
+	color: whitesmoke;
+}
+.videobox video {
+    position:relative;
+    z-index:0;
+}
+.videobox .overlay {
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:1;
+	text-align: center;
+}
+.videobox .overlay .txtline{
+	font-size:40px;
+	font-weight: 900;
+}
+
+.videobox .slide_tips{ display:block; width: 30px; height: 57px; position: absolute; left: 50%; margin-left: -15px; bottom: 62px; z-index: 2;}
+.videobox .slide_tips .s_line{ display:block; width: 2px; height: 32px; border-radius: 2px; position: absolute; left: 50%; margin-left: -1px; top: 0px; background: #fff;}
+.videobox .slide_tips .txt{ display:block; width: 100%; position: absolute; left:0; text-align: center; bottom: 0px; font-size: 12px; letter-spacing: 2px;}
